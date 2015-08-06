@@ -1,17 +1,22 @@
+# TODO:
+#  - store resizes on S3 (prob md5 of version/option/url)
+#  - Log resizes to database
+#  - Check resizes in database before fetching them
+#     - if they exist, then serve the thumbnail from s3 instead
+#  - Benchmark to see if fetching from s3 is faster
 class ResizeImage
   attr_reader :version, :options, :url
   delegate :path, :mime_type, :width, :height, to: :image
+
   def initialize(version:, option_string:, url:)
     @version        = version
     @option_string  = option_string
     @url            = url
   end
 
-  def path
-    image.path
-  end
-
   def image
+    #return MiniMagick::Image.open("https://tanga-image-resizer-nginx.herokuapp.com/v2/w_300,h_300/http%3A%2F%2Filab.engr.utk.edu%2Filabdocs%2FEpilog%2FBMP%2520sample%2520files%2Fhorses.bmp")
+
     @image ||=
       minimagick_image.tap do |image|
         image.format options.format
