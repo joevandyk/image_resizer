@@ -4,7 +4,7 @@ if ENV['RAILS_ENV'] == 'production'
   ruby '2.2.2'
 end
 
-gem 'rails', '4.2.3'
+gem 'activerecord'
 gem 'rails-api'
 gem 'pg'
 gem 'puma'
