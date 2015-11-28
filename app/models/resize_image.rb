@@ -14,6 +14,20 @@ class ResizeImage
     @url            = url
   end
 
+  def imgix_url
+    client = Imgix::Client.new(hosts: ['tanga1.imgix.net', 'tanga2.imgix.net', 'tanga3.imgix.net'],
+                               :token => 'wVchDVBwG0FwfxQL',
+                               :secure => true)
+    options ||= Options.new(image: nil, option_string: @option_string)
+    imgix_options = {}
+    imgix_options[:w] = options.width  if options.width
+    imgix_options[:h] = options.height if options.height
+    imgix_options[:h] = options.height if options.height
+    imgix_options[:crop] = 'faces,entropy'
+    imgix_options[:fit] = 'min' if options.should_crop?
+    client.path(url).to_url(imgix_options)
+  end
+
   def image
     #return MiniMagick::Image.open("https://tanga-image-resizer-nginx.herokuapp.com/v2/w_300,h_300/http%3A%2F%2Filab.engr.utk.edu%2Filabdocs%2FEpilog%2FBMP%2520sample%2520files%2Fhorses.bmp")
 
@@ -70,8 +84,6 @@ class ResizeImage::Options
       'jpg'
     end
   end
-
-  private
 
   def resize_string
     "#{width}x#{height}"

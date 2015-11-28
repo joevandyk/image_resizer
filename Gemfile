@@ -11,6 +11,7 @@ gem 'puma'
 gem 'mini_magick'
 gem 'rails_stdout_logging', group: :production
 gem 'aws-sdk'
+gem 'imgix'
 
 group :development, :test do
   gem 'rspec-rails'

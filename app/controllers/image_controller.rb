@@ -7,4 +7,12 @@ class ImageController < ApplicationController
 
     send_file(image.path, disposition: 'inline', type: image.mime_type)
   end
+
+  def imgix
+    image = ResizeImage.new(version:        params[:version],
+                            option_string:  params[:options],
+                            url:            params[:url])
+
+    redirect_to(image.imgix_url)
+  end
 end
